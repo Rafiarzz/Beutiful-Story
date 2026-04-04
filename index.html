@@ -425,6 +425,37 @@
       opacity: 1;
       transform: translateY(0);
     }
+    /* Gaya untuk Pemutar Musik di Navbar */
+    .music-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: 12px;
+      align-items: center;
+    }
+
+    .music-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .music-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      transform: translateY(-2px);
+      border-color: rgba(255, 122, 162, 0.5); /* Sentuhan warna pink saat disentuh */
+      box-shadow: 0 4px 12px rgba(255, 122, 162, 0.15);
+    }
   </style>
 </head>
 <body>
@@ -436,9 +467,10 @@
           <div>Perjalanan Kita</div>
           <small style="color:var(--muted)">Indi × Rafi</small>
         </div>
-        <button onclick="toggleMusic()" class="btn btn-secondary">
-          🎵 Play / Pause
-        </button>
+        <div class="music-controls">
+          <button class="music-btn" onclick="toggleMusic()">▶️ Play</button>
+          <button class="music-btn" onclick="nextSong()">⏭️ Next</button>
+        </div>
       </div>
       <div class="nav-links">
         <a href="#cerita">Cerita</a>
@@ -486,7 +518,7 @@
       <div class="hero-side">
         <div class="polaroid glass accent-border">
           <div class="frame">
-            <img src="img/perayaan rafi.png" alt="">
+            <img src="img/cover.png" alt="">
           </div>
           <div class="caption">
             <p>
@@ -586,20 +618,20 @@
           </div>
         </article>
 
-        <article class="card span-4" data-type="image" data-src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1600&q=80">
+        <article class="card span-4" data-type="image" data-src="img/perayaan rafi.png">
           <figure>
-            <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1600&q=80" alt="Momen 3">
+            <img src="img/perayaan rafi.png" alt="Momen 3">
           </figure>
           <div class="overlay">
-            <h3>Detail kecil</h3>
-            <p>Foto tangan, makanan, atau benda yang punya makna.</p>
+            <h3>Memorable momments</h3>
+            <p>Perayaan Ultah nich, lucu banget!.</p>
           </div>
         </article>
 
-        <article class="card span-4" data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4">
+        <article class="card span-4" data-type="video" data-src="img/VID-20251126-WA0002.mp4">
           <figure>
             <video muted playsinline loop>
-              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+              <source src="img/VID-20251126-WA0002.mp4" type="video/mp4">
             </video>
           </figure>
           <div class="overlay">
@@ -608,16 +640,30 @@
           </div>
         </article>
 
-        <article class="card span-4" data-type="image" data-src="https://images.unsplash.com/photo-1529634894688-4615516d1e74?auto=format&fit=crop&w=1600&q=80">
+        <article class="card span-4" data-type="video" data-src="img/VID_20260309_182029.mp4">
           <figure>
-            <img src="https://images.unsplash.com/photo-1529634894688-4615516d1e74?auto=format&fit=crop&w=1600&q=80" alt="Momen 4">
+            <video muted playsinline loop>
+              <source src="img/VID_20260309_182029.mp4" type="video/mp4">
+            </video>
           </figure>
           <div class="overlay">
-            <h3>Potret manis</h3>
-            <p>Pas untuk foto close-up yang lembut.</p>
+            <h3>Video lainnya</h3>
+            <p>Tambahkan video perjalanan atau momen lucu.</p>
           </div>
         </article>
 
+        <article class="card span-4" data-type="video" data-src="img/VID-20251216-WA0204.mp4">
+          <figure>
+            <video muted playsinline loop>
+              <source src="img/VID-20251216-WA0204.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <div class="overlay">
+            <h3>Dikasih bunga</h3>
+            <p>Merayakan 2/3 Rafii ehhe.</p>
+          </div>
+        </article>
+        
         <article class="card span-4" data-type="image" data-src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=1600&q=80">
           <figure>
             <img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=1600&q=80" alt="Momen 5">
@@ -727,7 +773,21 @@
     });
 
   const music = document.getElementById("bg-music");
-    music.volume = 0; // mulai dari 0
+
+    // 🎶 LIST LAGU (ganti sesuai file kamu)
+    const playlist = [
+      "song/lagu1 boypablo.mp3",
+      "song/lagu2 H.E.R.mp3",
+      "song/lagu3 d4vd TGMB.mp3",
+      "song/lagu4 d4vd HWM.mp3",
+      "song/lagu5 bruno.mp3"
+    ];
+
+    let currentSong = 0;
+
+    // SET LAGU AWAL
+    music.src = playlist[currentSong];
+    music.volume = 0;
 
     // 🔊 FADE IN
     function fadeIn(audio, duration = 2000) {
@@ -749,7 +809,7 @@
     }
 
     // 🔇 FADE OUT
-    function fadeOut(audio, duration = 2000) {
+    function fadeOut(audio, duration = 2000, callback = null) {
       let volume = audio.volume;
 
       const step = 0.05;
@@ -761,40 +821,46 @@
           volume = 0;
           audio.pause();
           clearInterval(fade);
+          if (callback) callback();
         }
         audio.volume = volume;
       }, interval);
     }
 
-    // ▶️ AUTO PLAY setelah klik pertama
-    document.addEventListener("click", () => {
-      fadeIn(music, 2000); 
-    }, { once: true });
-
-    // 🎵 TOGGLE BUTTON
+    // ▶️ PLAY / PAUSE
     function toggleMusic() {
       if (music.paused) {
-        fadeIn(music, 2000);
+        fadeIn(music);
       } else {
-        fadeOut(music, 2000);
+        fadeOut(music);
       }
     }
-    const faders = document.querySelectorAll('.fade-in');
 
-    const appearOnScroll = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
+    // ⏭️ NEXT SONG
+    function nextSong() {
+      fadeOut(music, 1000, () => {
+        currentSong++;
+
+        // 🔁 LOOP KE AWAL
+        if (currentSong >= playlist.length) {
+          currentSong = 0;
         }
+
+        music.src = playlist[currentSong];
+        fadeIn(music);
       });
-    }, {
-      threshold: 0.2
+    }
+
+    // 🔄 AUTO NEXT KALAU LAGU SELESAI
+    music.addEventListener("ended", () => {
+      nextSong();
     });
 
-    faders.forEach(el => {
-      appearOnScroll.observe(el);
-    });
-  </script>
+    // ▶️ AUTO START SETELAH KLIK PERTAMA
+    document.addEventListener("click", () => {
+      fadeIn(music);
+    }, { once: true });
+</script>
 </body>
 
 </html>
