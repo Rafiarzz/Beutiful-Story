@@ -459,6 +459,29 @@
   </style>
 </head>
 <body>
+  <div id="login-screen" style="
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:#0f1020;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+    ">
+    <h2 style="color:white">Halaman ini hanya untuk Kita ❤️</h2>
+
+    <input type="password" id="password" placeholder="Masukkan Password"
+      style="padding:10px;border-radius:10px;border:none;margin-top:10px">
+
+    <button onclick="checkPassword()" 
+      style="margin-top:10px;padding:10px 20px;border-radius:10px;border:none;cursor:pointer">
+      Masuk
+    </button>
+
+    <p id="error" style="color:red;display:none">Password salah!</p>
+  </div>
   <div class="topbar">
     <div class="nav glass">
       <div class="brand">
@@ -635,20 +658,20 @@
             </video>
           </figure>
           <div class="overlay">
-            <h3>Video singkat</h3>
-            <p>Tambahkan video perjalanan atau momen lucu.</p>
+            <h3>Ceritanya Produktif bareng</h3>
+            <p>Yang satu puseng TA satu lagi fokus magang.</p>
           </div>
         </article>
 
-        <article class="card span-4" data-type="video" data-src="img/VID_20260309_182029.mp4">
+        <article class="card span-4" data-type="video" data-src="img/unyel.mp4">
           <figure>
             <video muted playsinline loop>
-              <source src="img/VID_20260309_182029.mp4" type="video/mp4">
+              <source src="img/unyel.mp4" type="video/mp4">
             </video>
           </figure>
           <div class="overlay">
-            <h3>Video lainnya</h3>
-            <p>Tambahkan video perjalanan atau momen lucu.</p>
+            <h3>Mengunyel-unyel pipi</h3>
+            <p>Lucu banget waktu di unyel-unyel.</p>
           </div>
         </article>
 
@@ -664,13 +687,15 @@
           </div>
         </article>
         
-        <article class="card span-4" data-type="image" data-src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=1600&q=80">
+        <article class="card span-4" data-type="video" data-src="img/kumbang.mp4">
           <figure>
-            <img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=1600&q=80" alt="Momen 5">
+            <video muted playsinline loop>
+              <source src="img/kumbang.mp4" type="video/mp4">
+            </video>
           </figure>
           <div class="overlay">
-            <h3>Memori berwarna</h3>
-            <p>Bagus untuk highlight perjalanan yang seru.</p>
+            <h3>cantik yang mana?</h3>
+            <p>Jelas yang pake kerudung lah!.</p>
           </div>
         </article>
       </div>
@@ -860,6 +885,34 @@
     document.addEventListener("click", () => {
       fadeIn(music);
     }, { once: true });
+    
+  function checkPassword() {
+    const input = document.getElementById("password").value;
+
+    const passwordRafi = "rafi123";
+    const passwordIndi = "indi123";
+
+    if (input === passwordRafi) {
+      alert("Selamat datang Rafi 😎");
+      masukWeb();
+    } 
+    else if (input === passwordIndi) {
+      alert("Selamat datang Indi ❤️");
+      masukWeb();
+    } 
+    else {
+      document.getElementById("error").style.display = "block";
+    }
+  }
+
+  function masukWeb() {
+    const login = document.getElementById("login-screen");
+    login.style.opacity = "0";
+
+    setTimeout(() => {
+      login.style.display = "none";
+    }, 500);
+  } 
 </script>
 </body>
 
